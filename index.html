@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>二手硬體出清</title>
+<style>
+  :root {
+    --bg: #f5f5f3;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --muted: #6e6e73;
+    --line: #e3e3e0;
+    --accent: #0a6cff;
+    --ok: #1a7f37;
+    --warn: #b35900;
+    --sold: #8a8a8e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141415;
+      --card: #1e1e20;
+      --text: #f2f2f2;
+      --muted: #9a9aa0;
+      --line: #2e2e31;
+      --accent: #4c94ff;
+      --ok: #3fb950;
+      --warn: #e0913a;
+      --sold: #6e6e73;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Segoe UI", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 16px 64px; }
+  header h1 { margin: 0 0 8px; font-size: 28px; }
+  header p { margin: 0 0 16px; color: var(--muted); }
+  .info {
+    display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    margin-bottom: 24px;
+  }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .box h2 { margin: 0 0 6px; font-size: 14px; color: var(--muted); font-weight: 600; }
+  .box ul { margin: 0; padding-left: 18px; }
+  .box a { color: var(--accent); }
+  .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: var(--muted); font-size: 14px; }
+  .toolbar label { cursor: pointer; user-select: none; }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card.sold { opacity: .55; }
+  .photo {
+    position: relative; aspect-ratio: 4 / 3; background: var(--line);
+    display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 14px;
+    cursor: zoom-in;
+  }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo .count {
+    position: absolute; right: 8px; bottom: 8px; background: rgba(0,0,0,.6); color: #fff;
+    font-size: 12px; padding: 2px 8px; border-radius: 999px;
+  }
+  .badge {
+    position: absolute; left: 8px; top: 8px; font-size: 12px; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px; color: #fff;
+  }
+  .badge.available { background: var(--ok); }
+  .badge.reserved { background: var(--warn); }
+  .badge.sold { background: var(--sold); }
+  .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .body h3 { margin: 0; font-size: 17px; }
+  .price { font-size: 22px; font-weight: 700; }
+  .price small { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .cond { font-size: 14px; color: var(--muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  td { padding: 5px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--muted); width: 34%; padding-right: 8px; }
+  .note { font-size: 14px; margin: 0; }
+  footer { margin-top: 40px; text-align: center; color: var(--muted); font-size: 13px; }
+
+  /* 大圖檢視 */
+  .lightbox {
+    position: fixed; inset: 0; background: rgba(0,0,0,.92); display: none;
+    align-items: center; justify-content: center; z-index: 10;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 92vw; max-height: 86vh; object-fit: contain; }
+  .lightbox button {
+    position: absolute; background: rgba(255,255,255,.12); color: #fff; border: 0;
+    font-size: 28px; width: 48px; height: 48px; border-radius: 50%; cursor: pointer;
+  }
+  .lightbox .prev { left: 12px; top: 50%; transform: translateY(-50%); }
+  .lightbox .next { right: 12px; top: 50%; transform: translateY(-50%); }
+  .lightbox .close { right: 12px; top: 12px; font-size: 22px; }
+  .lightbox .idx { position: absolute; bottom: 16px; color: #ddd; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="title"></h1>
+    <p id="intro"></p>
+  </header>
+  <div class="info">
+    <div class="box"><h2>聯絡方式</h2><ul id="contact"></ul></div>
+    <div class="box"><h2>交易須知</h2><ul id="notes"></ul></div>
+  </div>
+  <div class="toolbar">
+    <span id="summary"></span>
+    <label><input type="checkbox" id="showSold" checked> 顯示已售出</label>
+  </div>
+  <div class="grid" id="grid"></div>
+  <footer id="updated"></footer>
+</div>
+
+<div class="lightbox" id="lb">
+  <img id="lbImg" alt="">
+  <button class="prev" id="lbPrev" aria-label="上一張">‹</button>
+  <button class="next" id="lbNext" aria-label="下一張">›</button>
+  <button class="close" id="lbClose" aria-label="關閉">✕</button>
+  <div class="idx" id="lbIdx"></div>
+</div>
+
+<script src="items.js"></script>
+<script>
+  const STATUS = { available: "販售中", reserved: "已預訂", sold: "已售出" };
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const money = n => typeof n === "number" ? "NT$ " + n.toLocaleString("zh-TW") : esc(n);
+
+  document.title = SITE.title;
+  document.getElementById("title").textContent = SITE.title;
+  document.getElementById("intro").textContent = SITE.intro;
+  document.getElementById("contact").innerHTML = SITE.contact.map(c =>
+    `<li>${esc(c.label)}：${c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.value)}</a>` : esc(c.value)}</li>`
+  ).join("");
+  document.getElementById("notes").innerHTML = SITE.notes.map(n => `<li>${esc(n)}</li>`).join("");
+  document.getElementById("updated").textContent = "最後更新：" + new Date(document.lastModified).toLocaleDateString("zh-TW");
+
+  function render() {
+    const showSold = document.getElementById("showSold").checked;
+    const left = ITEMS.filter(i => i.status !== "sold").length;
+    document.getElementById("summary").textContent = `共 ${ITEMS.length} 項，${left} 項可購買`;
+    document.getElementById("grid").innerHTML = ITEMS.map((item, i) => {
+      if (!showSold && item.status === "sold") return "";
+      const imgs = item.images || [];
+      const photo = imgs.length
+        ? `<img src="images/${esc(imgs[0])}" alt="${esc(item.name)}" loading="lazy">${imgs.length > 1 ? `<span class="count">${imgs.length} 張</span>` : ""}`
+        : "尚無照片";
+      const specs = Object.entries(item.specs || {}).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("");
+      return `
+        <article class="card ${item.status === "sold" ? "sold" : ""}">
+          <div class="photo" data-i="${i}">
+            ${photo}
+            <span class="badge ${esc(item.status)}">${STATUS[item.status] || ""}</span>
+          </div>
+          <div class="body">
+            <h3>${esc(item.name)}</h3>
+            <div class="price">${money(item.price)}${item.negotiable ? "<small>可議</small>" : ""}</div>
+            ${item.condition ? `<div class="cond">${esc(item.condition)}</div>` : ""}
+            ${specs ? `<table>${specs}</table>` : ""}
+            ${item.note ? `<p class="note">${esc(item.note)}</p>` : ""}
+          </div>
+        </article>`;
+    }).join("");
+  }
+
+  // 大圖檢視
+  const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbIdx = document.getElementById("lbIdx");
+  let cur = [], pos = 0;
+  function show() {
+    lbImg.src = "images/" + cur[pos];
+    lbIdx.textContent = `${pos + 1} / ${cur.length}`;
+    document.getElementById("lbPrev").style.display = document.getElementById("lbNext").style.display = cur.length > 1 ? "" : "none";
+  }
+  function step(d) { pos = (pos + d + cur.length) % cur.length; show(); }
+  document.getElementById("grid").addEventListener("click", e => {
+    const p = e.target.closest(".photo");
+    if (!p) return;
+    cur = ITEMS[p.dataset.i].images || [];
+    if (!cur.length) return;
+    pos = 0; show(); lb.classList.add("open");
+  });
+  document.getElementById("lbPrev").onclick = e => { e.stopPropagation(); step(-1); };
+  document.getElementById("lbNext").onclick = e => { e.stopPropagation(); step(1); };
+  document.getElementById("lbClose").onclick = () => lb.classList.remove("open");
+  lb.addEventListener("click", e => { if (e.target === lb) lb.classList.remove("open"); });
+  document.addEventListener("keydown", e => {
+    if (!lb.classList.contains("open")) return;
+    if (e.key === "Escape") lb.classList.remove("open");
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
+  });
+  let sx = 0;
+  lb.addEventListener("touchstart", e => { sx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener("touchend", e => { const dx = e.changedTouches[0].clientX - sx; if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1); });
+
+  document.getElementById("showSold").addEventListener("change", render);
+  render();
+</script>
+</body>
+</html>
