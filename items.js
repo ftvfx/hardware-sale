@@ -18,7 +18,7 @@ const SITE = {
 const ITEMS = [
   {
     name: "i7-5820K + RTX 3060 12GB 桌上型主機（含螢幕、鍵鼠）",
-    price: "價格洽詢",
+    price: 15000,
     negotiable: false,
     status: "available",
     condition: "",
