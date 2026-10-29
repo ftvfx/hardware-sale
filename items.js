@@ -105,4 +105,20 @@ const ITEMS = [
     },
     note: "",
   },
+  {
+    code: "F",
+    name: "TOTOLINK PX1000 Gigabit PCI-E 有線網卡",
+    price: "NT$ 50 / 張",
+    negotiable: false,
+    status: "available",
+    condition: "",
+    images: ["f01.jpg"],
+    specs: {
+      "型號": "TOTOLINK PX1000",
+      "介面": "PCI-E x1",
+      "速度": "10/100/1000 Mbps（Gigabit）",
+      "數量": "5 張，可單買",
+    },
+    note: "",
+  },
 ];
