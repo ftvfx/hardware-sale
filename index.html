@@ -75,6 +75,10 @@
   .badge.sold { background: var(--sold); }
   .body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
   .body h3 { margin: 0; font-size: 17px; }
+  .code {
+    display: inline-block; margin-right: 8px; padding: 0 8px; border-radius: 6px;
+    background: var(--line); color: var(--muted); font-size: 13px; vertical-align: 2px;
+  }
   .price { font-size: 22px; font-weight: 700; }
   .price small { font-size: 13px; font-weight: 400; color: var(--muted); margin-left: 6px; }
   .cond { font-size: 14px; color: var(--muted); }
@@ -161,7 +165,7 @@
             <span class="badge ${esc(item.status)}">${STATUS[item.status] || ""}</span>
           </div>
           <div class="body">
-            <h3>${esc(item.name)}</h3>
+            <h3>${item.code ? `<span class="code">${esc(item.code)}</span>` : ""}${esc(item.name)}</h3>
             <div class="price">${money(item.price)}${item.negotiable ? "<small>可議</small>" : ""}</div>
             ${item.condition ? `<div class="cond">${esc(item.condition)}</div>` : ""}
             ${specs ? `<table>${specs}</table>` : ""}

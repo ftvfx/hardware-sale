@@ -17,6 +17,7 @@ const SITE = {
 // images: 放在 images/ 資料夾的檔名，第一張為封面
 const ITEMS = [
   {
+    code: "A",
     name: "i7-5820K + RTX 3060 12GB 桌上型主機（含螢幕、鍵鼠）",
     price: 12500,
     negotiable: false,
@@ -37,6 +38,7 @@ const ITEMS = [
     note: "",
   },
   {
+    code: "B",
     name: "顯示卡四張一組（GTX 1650 / GTX 1060 / GT 1030 / GT 730）",
     price: 400,
     negotiable: false,
@@ -50,5 +52,57 @@ const ITEMS = [
       "左下": "MSI GT 730 2GB GDDR5 短卡，附 VGA 擋板（N730K-2GD5LP/OCV1）",
     },
     note: "位置對應第一張照片。",
+  },
+  {
+    code: "C",
+    name: "MSI GeForce GTX 1060 5G",
+    price: 300,
+    negotiable: false,
+    status: "available",
+    condition: "",
+    images: ["c01.jpg", "c02.jpg"],
+    specs: {
+      "品牌": "MSI 微星",
+      "GPU": "NVIDIA GeForce GTX 1060",
+      "記憶體": "5GB GDDR5",
+      "散熱": "雙風扇",
+    },
+    note: "",
+  },
+  {
+    code: "D",
+    name: "ZOTAC GAMING GeForce RTX 3060 Twin Edge OC 12GB",
+    price: 3000,
+    negotiable: false,
+    status: "available",
+    condition: "",
+    images: ["d01.jpg", "d02.jpg"],
+    specs: {
+      "品牌": "ZOTAC 索泰",
+      "型號": "ZT-A30600H-10M",
+      "GPU": "NVIDIA GeForce RTX 3060",
+      "記憶體": "12GB GDDR6 192-bit",
+      "散熱": "雙風扇",
+      "製造日期": "2022 年 1 月",
+    },
+    note: "",
+  },
+  {
+    code: "E",
+    name: "MSI GeForce RTX 3060 VENTUS 3X 12G OC",
+    price: 4000,
+    negotiable: false,
+    status: "available",
+    condition: "",
+    images: ["e01.jpg"],
+    specs: {
+      "品牌": "MSI 微星",
+      "型號": "MS-V397",
+      "GPU": "NVIDIA GeForce RTX 3060",
+      "記憶體": "12GB GDDR6 192-bit",
+      "散熱": "三風扇",
+      "製造日期": "2021 年 10 月",
+    },
+    note: "",
   },
 ];
