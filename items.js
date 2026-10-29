@@ -17,7 +17,7 @@ const SITE = {
 // images: 放在 images/ 資料夾的檔名，第一張為封面
 const ITEMS = [
   {
-    name: "i7-5820K + RTX 3060 12GB 桌上型主機",
+    name: "i7-5820K + RTX 3060 12GB 桌上型主機（含螢幕、鍵鼠）",
     price: "價格洽詢",
     negotiable: false,
     status: "available",
@@ -31,6 +31,8 @@ const ITEMS = [
       "儲存": "Crucial MX300 275GB M.2 SSD + T-FORCE 1TB SSD",
       "散熱": "Cooler Master 一體式水冷",
       "電源": "MSI MAG 650W 銅牌",
+      "螢幕": "ASUS VZ229HE 22 吋 IPS 薄邊框",
+      "周邊": "鍵盤 + 滑鼠一組",
     },
     note: "",
   },
