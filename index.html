@@ -30,6 +30,7 @@
     }
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   body {
     margin: 0;
     background: var(--bg);
@@ -111,9 +112,9 @@
     <h1 id="title"></h1>
     <p id="intro"></p>
   </header>
-  <div class="info">
-    <div class="box"><h2>聯絡方式</h2><ul id="contact"></ul></div>
-    <div class="box"><h2>交易須知</h2><ul id="notes"></ul></div>
+  <div class="info" id="info">
+    <div class="box" id="contactBox"><h2>聯絡方式</h2><ul id="contact"></ul></div>
+    <div class="box" id="notesBox"><h2>交易須知</h2><ul id="notes"></ul></div>
   </div>
   <div class="toolbar">
     <span id="summary"></span>
@@ -145,6 +146,9 @@
     `<li>${esc(c.label)}：${c.link ? `<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.value)}</a>` : esc(c.value)}</li>`
   ).join("");
   document.getElementById("notes").innerHTML = SITE.notes.map(n => `<li>${esc(n)}</li>`).join("");
+  document.getElementById("contactBox").hidden = !SITE.contact.length;
+  document.getElementById("notesBox").hidden = !SITE.notes.length;
+  document.getElementById("info").hidden = !SITE.contact.length && !SITE.notes.length;
   document.getElementById("updated").textContent = "最後更新：" + new Date(document.lastModified).toLocaleDateString("zh-TW");
 
   function render() {

@@ -2,13 +2,13 @@
 const SITE = {
   title: "二手硬體出清",
   intro: "自用硬體出清，皆為個人使用，價格與狀況如下。有興趣歡迎私訊詢問。",
+  // 清單留空時，該區塊不會顯示
   contact: [
     // { label: "LINE", value: "your-line-id", link: "https://line.me/ti/p/~your-line-id" },
-    { label: "聯絡方式", value: "（待填）" },
   ],
   notes: [
-    "（待填）面交地點／寄送方式",
-    "（待填）付款方式",
+    // "面交地點／寄送方式",
+    // "付款方式",
   ],
 };
 
