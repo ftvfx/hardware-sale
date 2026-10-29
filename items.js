@@ -28,7 +28,7 @@ const ITEMS = [
       "主機板": "技嘉 GIGABYTE X99-SLI",
       "記憶體": "DDR4 16GB × 4 = 64GB",
       "顯示卡": "ASUS GeForce RTX 3060 12GB",
-      "儲存": "美光 Micron MX300 275GB M.2 2280 SATA SSD + T-FORCE 1TB SSD",
+      "儲存": "Crucial MX300 275GB M.2 SSD + T-FORCE 1TB SSD",
       "散熱": "Cooler Master 一體式水冷",
       "電源": "MSI MAG 650W 銅牌",
       "螢幕": "ASUS VZ229HE 22 吋 IPS 薄邊框",
