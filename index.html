@@ -127,7 +127,8 @@
   <div class="idx" id="lbIdx"></div>
 </div>
 
-<script src="items.js"></script>
+<!-- 加時間戳避免瀏覽器快取舊的商品資料 -->
+<script>document.write('<script src="items.js?v=' + Date.now() + '"><\/script>');</script>
 <script>
   const STATUS = { available: "販售中", reserved: "已預訂", sold: "已售出" };
   const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
