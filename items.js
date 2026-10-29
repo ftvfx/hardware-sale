@@ -94,7 +94,7 @@ const ITEMS = [
     negotiable: false,
     status: "available",
     condition: "",
-    images: ["e01.jpg"],
+    images: ["e01.jpg", "e02.jpg"],
     specs: {
       "品牌": "MSI 微星",
       "型號": "MS-V397",
