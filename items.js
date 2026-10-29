@@ -36,4 +36,19 @@ const ITEMS = [
     },
     note: "",
   },
+  {
+    name: "顯示卡四張一組（GTX 1650 / GTX 1060 / GT 1030 / GT 730）",
+    price: 400,
+    negotiable: false,
+    status: "available",
+    condition: "四張一起出售",
+    images: ["gpu-front.jpg", "gpu-back.jpg"],
+    specs: {
+      "右上": "技嘉 GTX 1650 GDDR6 WINDFORCE OC 4GB（GV-N1656WF2OC-4GD）",
+      "右下": "MSI GTX 1060 AERO ITX 3GB OC",
+      "左上": "ASUS GT 1030 2GB DDR4 被動散熱短卡（GT1030-SL-2GD4-BRK）",
+      "左下": "MSI GT 730 2GB GDDR5 短卡，附 VGA 擋板（N730K-2GD5LP/OCV1）",
+    },
+    note: "位置對應第一張照片。",
+  },
 ];
