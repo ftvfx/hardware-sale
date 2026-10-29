@@ -1,7 +1,7 @@
 // 網站資訊：標題、說明、聯絡方式、交易須知
 const SITE = {
   title: "二手硬體出清",
-  intro: "自用硬體出清，皆為個人使用，價格與狀況如下。有興趣歡迎私訊詢問。",
+  intro: "公司硬體出清，皆正常使用，價格與狀況如下。有興趣歡迎詢問。",
   // 清單留空時，該區塊不會顯示
   contact: [
     // { label: "LINE", value: "your-line-id", link: "https://line.me/ti/p/~your-line-id" },
